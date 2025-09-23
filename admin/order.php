@@ -103,7 +103,7 @@ $data = mysqli_fetch_array($result);
                     <tbody>
                         <?php
                             $no = 1 ;
-                            $query="SELECT * FROM tbl_order";
+                            $query="SELECT * FROM tbl_order ORDER BY tgl_order DESC";
                             $result = mysqli_query($db,$query);
                             while ($data = mysqli_fetch_assoc($result)) {
                                 $tgl = $data['tgl_order'];
