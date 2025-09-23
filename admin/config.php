@@ -57,6 +57,26 @@ if (isset($_GET['pages']))
     {
         include 'ubah-pos.php';
     }
+    elseif ($_GET['pages'] == "ulasan")
+    {
+        include 'ulasan.php';
+    }
+    elseif ($_GET['pages'] == "ubah-ulasan")
+    {
+        include 'ubah-ulasan.php';
+    }
+    elseif ($_GET['pages'] == "laporan")
+    {
+        include 'laporan.php';
+    }
+    elseif ($_GET['pages'] == "pengaturan")
+    {
+        include 'pengaturan.php';
+    }
+    elseif ($_GET['pages'] == "laporan")
+    {
+        include 'laporan.php';
+    }
     elseif ($_GET['pages'] == "logout")
     {
         include 'logout.php';

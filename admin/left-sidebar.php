@@ -48,6 +48,9 @@
                 <li>
                     <a href="index.php?pages=pelanggan"><i class="mdi mdi-account"></i>Pelanggan</a>
                 </li>
+                <li>
+                    <a href="index.php?pages=ulasan"><i class="mdi mdi-star"></i>Ulasan</a>
+                </li>
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline"></i>
                         <span> Order <span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></span></a>
@@ -58,6 +61,12 @@
                                 </span></a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="index.php?pages=laporan"><i class="mdi mdi-file-document"></i>Laporan</a>
+                </li>
+                <li>
+                    <a href="index.php?pages=pengaturan"><i class="mdi mdi-settings"></i>Pengaturan</a>
                 </li>
                 <li class="menu-title">Bantuan</li>
                 <li>

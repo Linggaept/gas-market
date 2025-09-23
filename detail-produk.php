@@ -11,15 +11,6 @@
         padding-right: 0;
     }
 
-    /* 
-        .row>[class^="col-sm-8"] {
-            padding-right: 100px;
-        } */
-
-    /* .col-sm-8,
-        .col-sm4 {
-            padding: 0px;
-        } */
     #containt {
         margin-top: 80px;
     }
@@ -50,35 +41,27 @@
         color: #ffc000;
     }
 
-    #btnDesc1 {
+    #btnDesc1, #btnDesc2 {
         padding: 12px 10px;
         width: 100%;
         border-radius: 0;
         color: white;
-        background-color: #3498db;
-        border-top: px solid #3498db;
-
-
+        border: none;
     }
 
-    #btnDesc1:hover,
-    #btnDesc2:hover {
-        background-color: rgb(83, 83, 83);
+    #btnDesc1 {
+        background-color: #3498db;
     }
 
     #btnDesc2 {
-        padding: 10px 10px;
-        width: 100%;
-        border-radius: 0;
-        color: white;
         background-color: silver;
-        margin-top: 4px;
     }
 
     .dec {
         width: 100%;
         height: auto;
         border: 2px solid #3498db;
+        padding-bottom: 20px;
     }
 </style>
 <?php
@@ -86,6 +69,21 @@
     $query="SELECT * FROM tbl_produk WHERE id_produk='$id'";
     $result=mysqli_query($db,$query);
     $produk = mysqli_fetch_assoc($result);
+
+    // --- START: Fetch Reviews ---
+    $ulasan_query = mysqli_query($db, "SELECT u.*, pl.nm_pelanggan FROM tbl_ulasan u JOIN tbl_pelanggan pl ON u.id_pelanggan = pl.id_pelanggan WHERE u.id_produk = '$id' ORDER BY u.tgl_ulasan DESC");
+    $reviews = [];
+    $total_rating = 0;
+    $review_count = 0;
+    if ($ulasan_query) {
+        while ($row = mysqli_fetch_assoc($ulasan_query)) {
+            $reviews[] = $row;
+            $total_rating += $row['rating'];
+            $review_count++;
+        }
+    }
+    $average_rating = ($review_count > 0) ? $total_rating / $review_count : 0;
+    // --- END: Fetch Reviews ---
 ?>
 <div class="container bg-white rounded pt-4 pb-4" id="containt">
     <div class="row">
@@ -101,11 +99,10 @@
             <h3><?php echo $produk['nm_produk']; ?></h3>
             <div class="star-rating">
                 <ul class="list-inline">
-                    <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
-                    <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
-                    <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
-                    <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
-                    <li class="list-inline-item m-0"><i class="fa fa-star-o"></i></li>
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <li class="list-inline-item m-0"><i class="fa <?php echo ($i <= $average_rating) ? 'fa-star' : 'fa-star-o'; ?>"></i></li>
+                    <?php endfor; ?>
+                    <li class="list-inline-item m-0 text-muted">(<?php echo $review_count; ?> ulasan)</li>
                 </ul>
             </div>
             <hr>
@@ -122,8 +119,6 @@
                 <div class="row">
                     <div class="col-3">
                         <h3><span class="text-secondary" style="font-size: 15px">Jumlah : </span></h3>
-                        <!-- <input id="demo0" type="text" value="1" name="demo0" data-bts-min="1"
-                                data-bts-max="<?php echo $produk['stok']; ?>" class="text-center" /> -->
                         <div class="input-group spinner">
                             <button type="button" class="btn btn-primary btn-number pl-2 pr-2"
                                 style="border-radius: 5px 0 0 5px;" id="minus-btn">
@@ -143,8 +138,6 @@
                                                 .val()) <
                                             parseInt(input.attr('max'))) {
                                             input.val(parseInt(input.val(), 10) + 1);
-                                        } else {
-                                            btn.next("disabled", true);
                                         }
                                     });
                                     $('.spinner #minus-btn').on('click',
@@ -155,8 +148,6 @@
                                                     .val()) >
                                                 parseInt(input.attr('min'))) {
                                                 input.val(parseInt(input.val(), 10) - 1);
-                                            } else {
-                                                btn.prev("disabled", true);
                                             }
                                         });
                                 })
@@ -211,18 +202,59 @@
                 <button class="btn" id="btnDesc1">DESCRIPTIONS</button>
             </div>
             <div class="col-md-2">
-                <button class="btn text-light" id="btnDesc2">FEEDBACKS</button>
+                <button class="btn" id="btnDesc2">FEEDBACKS (<?php echo $review_count; ?>)</button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 bg-light">
-                <div class="dec pt-5 pl-5 pr-5 text-justify">
+                <div id="descriptionContent" class="dec pt-5 pl-5 pr-5 text-justify">
                     <h5>Spesifikasi Dan Deskripsi Produk :</h5>
                     <?php echo $produk['deskripsi']; ?>
+                </div>
+                <div id="feedbackContent" class="dec pt-5 pl-5 pr-5" style="display: none;">
+                    <h5>Ulasan Produk :</h5>
+                    <?php if ($review_count > 0): ?>
+                        <?php foreach ($reviews as $review): ?>
+                            <div class="media mt-4">
+                                <div class="media-body">
+                                    <h6 class="mt-0"><?php echo htmlspecialchars($review['nm_pelanggan']); ?></h6>
+                                    <div class="star-rating">
+                                        <ul class="list-inline">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <li class="list-inline-item m-0"><i class="fa <?php echo ($i <= $review['rating']) ? 'fa-star' : 'fa-star-o'; ?>"></i></li>
+                                            <?php endfor; ?>
+                                        </ul>
+                                    </div>
+                                    <small class="text-muted"><?php echo date("d F Y", strtotime($review['tgl_ulasan'])); ?></small>
+                                    <p><?php echo nl2br(htmlspecialchars($review['ulasan'])); ?></p>
+                                </div>
+                            </div>
+                            <hr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Belum ada ulasan untuk produk ini.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#btnDesc1").click(function(){
+            $("#feedbackContent").hide();
+            $("#descriptionContent").show();
+            $("#btnDesc1").css("background-color", "#3498db");
+            $("#btnDesc2").css("background-color", "silver");
+        });
+        $("#btnDesc2").click(function(){
+            $("#descriptionContent").hide();
+            $("#feedbackContent").show();
+            $("#btnDesc2").css("background-color", "#3498db");
+            $("#btnDesc1").css("background-color", "silver");
+        });
+    });
+</script>
 
 <?php require "footer.php"; ?>

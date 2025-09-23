@@ -6,8 +6,12 @@ include "../api/rajaongkir.php";
 $api_key = "4aecd64265f0426f99899087c0b058d3";
 
 if (isset($_GET['district_destination'])) {
+    // Get origin district from settings
+    $origin_query = mysqli_query($db, "SELECT nilai_pengaturan FROM tbl_pengaturan WHERE nama_pengaturan = 'origin_district'");
+    $origin_row = mysqli_fetch_assoc($origin_query);
+    $origin_district = $origin_row ? $origin_row['nilai_pengaturan'] : '1391'; // Fallback to default if not set
+
     $destination_district = $_GET['district_destination'];
-    $origin_district = '1391'; // ID Kecamatan Asal (contoh: Laweyan)
     $courier = 'jne:sicepat:ide:sap:jnt:ninja:tiki:lion:anteraja:pos:ncs:rex:rpx:sentral:star:wahana:dse';
     
     // Calculate total weight from cart
