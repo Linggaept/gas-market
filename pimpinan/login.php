@@ -9,11 +9,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/icons/font-awesome/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png">
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="../assets/img/icon/favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
     <style>
         * {
@@ -60,7 +61,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #0d6efd;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
         }
 
@@ -120,36 +121,17 @@
             background: #fff;
             transition: all 0.3s ease;
             outline: none;
+            color: #374151;
         }
 
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
             transform: translateY(-1px);
         }
 
         .form-control::placeholder {
             color: #9CA3AF;
-        }
-
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-right: 10px;
-            accent-color: #667eea;
-        }
-
-        .checkbox-wrapper label {
-            color: #6B7280;
-            font-size: 14px;
-            cursor: pointer;
-            user-select: none;
         }
 
         .btn-login {
@@ -165,6 +147,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            margin-bottom: 24px;
         }
 
         .btn-login::before {
@@ -174,7 +157,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: #0d6efd;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -185,63 +168,21 @@
         .btn-login:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(13, 110, 253, 0.3);
+            background: #0b5ed7;
         }
 
         .btn-login:active {
             transform: translateY(0);
         }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .login-container {
-                margin: 20px;
-                border-radius: 12px;
-            }
-            
-            .login-header {
-                padding: 30px 20px 20px;
-            }
-            
-            .login-form {
-                padding: 30px 20px;
-            }
-            
-            .login-header h2 {
-                font-size: 24px;
-            }
-        }
-
-        /* Loading animation */
-        .btn-loading {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        .btn-loading::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            margin: auto;
-            border: 2px solid transparent;
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
-    <title>Log In</title>
+    <title>Pimpinan Login</title>
 </head>
 
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h2>Welcome Back</h2>
-            <p>Please sign in to your admin account</p>
+            <h2>Pimpinan Login</h2>
+            <p>Please sign in to your account</p>
         </div>
         
         <form class="login-form" action="" method="post">
@@ -267,18 +208,19 @@
         </form>
 
         <?php
-            if (isset($_POST['login'])) {
-                $ambil = $db->query("SELECT * FROM tbl_admin WHERE username = '".$_POST['u']."' AND password = '".$_POST['p']."'");
-                $yangcocok = $ambil->num_rows;
-                if ($yangcocok == 1) {
-                    $_SESSION['tbl_admin'] = $ambil->fetch_assoc();
-                    echo "<script> swal('', 'Login Berhasil', 'success');</script>";
-                    echo "<meta http-equiv='refresh' content='1;url=index.php'>";
-                } else {
-                    echo "<script> swal('', 'Login Gagal', 'warning');</script>";
-                    echo "<meta http-equiv='refresh' content='1;url=login.php'>";
-                }
+        if (isset($_POST['login'])) {
+            $ambil = $db->query("SELECT * FROM tbl_pimpinan WHERE username = '" . $_POST['u'] . "' AND password = '" . $_POST['p'] . "'");
+            $yangcocok = $ambil->num_rows;
+            if ($yangcocok == 1) {
+                $akun = $ambil->fetch_assoc();
+                $_SESSION['pimpinan'] = $akun;
+
+                echo "<script type='text/javascript'>swal('Selamat', 'Anda Berhasil Login', 'success');</script>";
+                echo "<meta http-equiv='refresh' content='1;url=index.php?pages=laporan'>";
+            } else {
+                echo "<script type='text/javascript'>swal('Login Gagal!', 'Username Dan Password Anda Salah', 'info');</script>";
             }
+        }
         ?>
     </div>
 </body>

@@ -119,14 +119,17 @@ $data = mysqli_fetch_assoc($result);
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body alert-info">
-                        <p>Silahkan melakukan pembayaran ke nomor rekening di bawah ini :
+                        <p>Silahkan melakukan pembayaran ke salah satu nomor rekening di bawah ini :
                         <ul>
-                            <li><b>MANDIRI</b> 242424242424</li>
-                            <li><b>BRI</b> 23232323232</li>
-                            <li><b>BCA</b> 287878722642</li>
+                            <?php
+                            $ambil = $db->query("SELECT * FROM tbl_rekening");
+                            while($rekening = $ambil->fetch_assoc()){
+                            ?>
+                            <li><b><?php echo $rekening['nm_bank']; ?></b> <?php echo $rekening['no_rekening']; ?> (a/n <?php echo $rekening['nm_pemilik']; ?>)</li>
+                            <?php } ?>
                         </ul>
-                        Semua atas nama Gas Pertamina, selain itu palsu</p>
-                        <p>Mohon melaukan konfirmasi di menu <a href="orderan.php">Orderan</a> setelah melakuakn
+                        </p>
+                        <p>Mohon melakukan konfirmasi di menu <a href="orderan.php">Orderan</a> setelah melakukan
                             pembayaran</p>
 
                     </div>

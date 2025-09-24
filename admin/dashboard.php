@@ -19,16 +19,13 @@ $q5 = "SELECT SUM(stok) as jml FROM tbl_produk";
 $res5 = mysqli_query($db,$q5);
 $dta5 = mysqli_fetch_assoc($res5);
 
-$q6 = "SELECT COUNT(id_pos) as jml FROM tbl_pos";
-$res6 = mysqli_query($db,$q6);
-$dta6 = mysqli_fetch_assoc($res6);
 ?>
 
 <script type="text/javascript" src="assets/js/Chart.js"></script>
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6 col-xl-3">
+		<div class="col-md-6 col-xl-4">
 			<div class="mini-stat clearfix bg-orange">
 				<span class="font-40 text-white mr-0 float-right"><i class="mdi mdi-cart-outline"></i></span>
 				<div class="mini-stat-info mt-3 float-left">
@@ -40,7 +37,7 @@ $dta6 = mysqli_fetch_assoc($res6);
 				</p>
 			</div>
 		</div>
-		<div class="col-md-6 col-xl-3">
+		<div class="col-md-6 col-xl-4">
 			<div class="mini-stat clearfix bg-primary">
 				<span class="font-40 text-white mr-0 float-right"><i class="mdi mdi-account-multiple"></i></span>
 				<div class="mini-stat-info mt-3 float-left">
@@ -52,7 +49,7 @@ $dta6 = mysqli_fetch_assoc($res6);
 				</p>
 			</div>
 		</div>
-		<div class="col-md-6 col-xl-3">
+		<div class="col-md-6 col-xl-4">
 			<div class="mini-stat clearfix bg-success">
 				<span class="font-40 text-white mr-0 float-right"><i class="mdi mdi-gift"></i></span>
 				<div class="mini-stat-info mt-3 float-left">
@@ -61,18 +58,6 @@ $dta6 = mysqli_fetch_assoc($res6);
 				<div class="clearfix"></div>
 				<p class=" mb-0 m-t-10 text-muted">
 					<h4 class="counter font-light mt-0 text-white"><?php echo number_format($dta5['jml']); ?> Unit</h4>
-				</p>
-			</div>
-		</div>
-		<div class="col-md-6 col-xl-3">
-			<div class="mini-stat clearfix bg-purple">
-				<span class="font-40 text-white mr-0 float-right"><i class="mdi mdi-lead-pencil"></i></span>
-				<div class="mini-stat-info mt-3 float-left">
-					<span style="font-size: small;" class="text-white">Total Artikel</span>
-				</div>
-				<div class="clearfix"></div>
-				<p class=" mb-0 m-t-10 text-muted">
-					<h4 class="counter font-light mt-0 text-white"><?php echo number_format($dta6['jml']); ?> Artikel</h4>
 				</p>
 			</div>
 		</div>

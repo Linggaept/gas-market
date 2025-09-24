@@ -71,7 +71,7 @@ if(!isset($_SESSION['tbl_admin'])){
     </div>
     <!-- END wrapper -->
     <!-- jQuery  -->
-    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <!-- <script src="../assets/js/Chart.js"></script> -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/modernizr.min.js"></script>

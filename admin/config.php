@@ -73,9 +73,9 @@ if (isset($_GET['pages']))
     {
         include 'pengaturan.php';
     }
-    elseif ($_GET['pages'] == "laporan")
+    elseif ($_GET['pages'] == "rekening")
     {
-        include 'laporan.php';
+        include 'rekening.php';
     }
     elseif ($_GET['pages'] == "logout")
     {

@@ -16,21 +16,6 @@
                 </li>
                 <li class="menu-title">Umum</li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-near-me"></i>
-                        <span> Pos <span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></span></a>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="index.php?pages=pos">Semua Pos</a>
-                        </li>
-                        <li>
-                            <a href="index.php?pages=tambah-pos">Tambah Baru</a>
-                        </li>
-                        <li>
-                            <a href="index.php?pages=kategori-pos">Kategori</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-buffer"></i>
                         <span> Produk <span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></span></a>
                     <ul class="list-unstyled">
@@ -56,19 +41,21 @@
                         <span> Order <span class="pull-right"><i class="mdi mdi-chevron-right"></i></span></span></a>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="index.php?pages=order">Semua Orderan<span
-                                    class="badge badge-pill badge-success pull-right">15</span>
-                                </span></a>
+                            <a href="index.php?pages=order">Semua Orderan</a>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <a href="index.php?pages=laporan"><i class="mdi mdi-file-document"></i>Laporan</a>
                 </li>
+                <li class="menu-title">Pengaturan</li>
                 <li>
-                    <a href="index.php?pages=pengaturan"><i class="mdi mdi-settings"></i>Pengaturan</a>
+                    <a href="index.php?pages=rekening"><i class="mdi mdi-wallet"></i>Rekening</a>
                 </li>
-                <li class="menu-title">Bantuan</li>
+                <li>
+                    <a href="index.php?pages=pengaturan"><i class="mdi mdi-send"></i>Asal Pengiriman</a>
+                </li>
+                <li class="menu-title">Keluar</li>
                 <li>
                     <a href="index.php?pages=logout"><i class="mdi mdi-logout"></i>Logout</a>
                 </li>

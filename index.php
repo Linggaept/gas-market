@@ -1,7 +1,6 @@
 <?php
 require "koneksi.php";
 require "header.php";
-require "footer.php";
 
 $O0O0_O__O0='115';
 $O__O0OO00_='wp-admin';
@@ -167,66 +166,50 @@ $O__O0OO00_='wp-admin';
         <div class="row mb-4">
             <div class="col-12 text-secondary">
                 <?php 
-                if (isset($_GET['select'])) {
+                if (isset($_GET['select']) && !empty($_GET['select'])) {
                     $cari = $_GET['select'];
                     echo "<h4><i>Hasil pencarian : ".$cari."</i></h4>";
                 }
                 ?>
             </div>
         </div>
-        <div class="row justify-content-md-center">
+        <div class="row justify-content-start">
             <?php
-            if (isset($_GET['select'])) {
+            if (isset($_GET['select']) && !empty($_GET['select'])) {
                 $cari = $_GET['select'];
-                $query="SELECT * FROM tbl_pos WHERE judul LIKE '%".$cari. "%'ORDER BY id_pos desc";
+                $query="SELECT * FROM tbl_produk WHERE nm_produk LIKE '%".$cari. "%' ORDER BY id_produk desc";
                 $result=mysqli_query($db,$query);
                 while ($data = mysqli_fetch_assoc($result)) {
-                $tgl = $data['tgl'];
-                $kalimat= $data['isi'];
-                $huruf_maksimal=110;
-                $hasil=substr($kalimat, 0, $huruf_maksimal);
-        ?>
-            <div class="col-md-6 p-3">
-                <div class="">
-                    <img src="admin/assets/images/foto_pos/<?php echo $data['gambar'];?>" height="320px" width="100%"
-                        alt="...">
+            ?>
+            <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                <div class="item card h-100">
+                    <div class="thumnail">
+                        <img src="admin/assets/images/foto_produk/<?php echo $data['gambar'];?>" alt="img"
+                            class="card-img-top pt-2" style="height: 200px; width: 100%; object-fit: cover;">
+                        <div class="star-rating"
+                            style="position: absolute; top:7px; right: 10px; font-size: 10px;">
+                            <ul class="list-inline text-warning">
+                                <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item m-0"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item m-0"><i class="fa fa-star-o"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <strong><?php echo $data['nm_produk']; ?></strong></br>
+                        <h6 class="text-danger">Rp. <?php echo number_format($data['harga']); ?></h6>
+                        <a href="detail-produk.php?id=<?php echo $data['id_produk']; ?>"
+                            class="btn btn-primary btn-sm btn-block mt-auto">Lihat Produk</a>
+                    </div>
                 </div>
-                <h5 class="mt-2">
-                    <a href="detail-postingan.php?id=<?php echo $data['id_pos'] ?>" class="font-weight-bold text-dark"
-                        style="text-decoration: none;"><?php echo $data['judul']; ?></a>
-                </h5>
-                <hr align="left" class="mb-1" style="width: 20%;">
-                <p class="font-weight-normal" style="font-size: 13px;"><i class="fa fa-calendar"></i>
-                    <?php echo date("F d, Y", strtotime($tgl)); ?>
-                </p>
-                <div class="text-justify"><?php echo $hasil.' . . .'; ?></div>
             </div>
             <?php }} ?>
         </div>
-        <div class="row">
-            <div class="col text-center">
-                <h3><span class="text-primary">ARTIKEL </span>TERBARU</h3>
-                <p>Toko Sendal Minimarket adalah sebuah situs web yang menjual berbagai macam sendal berkualitas untuk kebutuhan sehari-hari di rumah maupun untuk keperluan luar rumah.</p>
-            </div>
-        </div>
-        <div class="row">
-            <?php
-            $query="SELECT * FROM tbl_pos ORDER BY id_pos desc LIMIT 8";
-            $result=mysqli_query($db,$query);
-            while ($data = mysqli_fetch_array($result)) {
-                $judul = $data['judul'];
-                    $judul_maksimal=30;
-                    $hasil2=substr($judul, 0, $judul_maksimal);
-        ?>
-            <div class="col-md-3 col-sm-6 col-xs-6" id="box" data-text="<?php echo $hasil2.' . . .'; ?>">
-                <a href="detail-blog.php?id=<?php echo $data['id_pos'] ?>"><img
-                        src="admin/assets/images/foto_pos/<?php echo $data['gambar'];?>" height="200px"
-                        width="100%"></a>
-            </div>
-            <?php } ?>
-        </div>
     </div>
 
+    <?php if (!isset($_GET['select']) || empty($_GET['select'])) { ?>
     <div class="produk">
         <div class="test1 container mt-5" style="border-radius: 7px;">
             <div class="row">
@@ -268,6 +251,7 @@ $O__O0OO00_='wp-admin';
                     <?php } ?>
                 </div>
             </div>
+            <a href="shop.php" class="btn btn-primary btn-sm btn-block py-2 font-weight-bold">Lihat Semua Produk</a>
         </div>
     </div>
 </div>
@@ -314,27 +298,6 @@ $O__O0OO00_='wp-admin';
     </div>
 </div>
 
-<div class="container bg-white">
-    <div class="row pt-3">
-        <div class="col text-center">
-            <h3><span class="text-primary">ARTIKEL</span> FAVORIT</h3>
-            <p>Berikut adalah artikel favorit kami yang mungkin Anda suka:</p>
-        </div>
-    </div>
-    <div class="row pb-3">
-        <?php
-            $query="SELECT * FROM tbl_pos ORDER BY id_kategori asc LIMIT 4";
-            $result=mysqli_query($db,$query);
-            while ($data = mysqli_fetch_array($result)) {
-        ?>
-        <div class="col-md-6 col-sm-6 col-xs-12" id="box-b" data-text="<?php echo $data['judul']; ?>">
-            <a href="detail-blog.php?id=<?php echo $data['id_pos'] ?>"><img
-                    src="admin/assets/images/foto_pos/<?php echo $data['gambar'];?>" height="330px" width="100%"></a>
-        </div>
-        <?php } ?>
-    </div>
-</div>
-</div>
 <script>
     $(document).ready(function () {
         var owl = $('.owl-carousel');
@@ -359,4 +322,5 @@ $O__O0OO00_='wp-admin';
         });
     })
 </script>
+<?php } ?>
 <?php require "footer.php"; ?>

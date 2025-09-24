@@ -123,12 +123,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="gallery.php">Gallery</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.php">Blog</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="shop.php">Shop</a>
                             <!-- <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
